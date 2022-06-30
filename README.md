@@ -49,3 +49,9 @@ This package was created with [xontrib cookiecutter template](https://github.com
 5. Now when you create new Release the Github Actions will publish the xontrib to PyPi automatically. Release status will be in Actions sction.
 
 **Add preview image**. Add the image to repository "Settings" - "Options" - "Social preview". It allows to show preview image in Github Topics and social networks.
+
+## Todos
+
+- pre-commit CI
+- coverage CI
+- automatic release
