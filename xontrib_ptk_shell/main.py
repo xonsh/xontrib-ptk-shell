@@ -1,8 +1,12 @@
-from xonsh.built_ins import XonshSession
+from xonsh.built_ins import ShellDefinition, XonshSession
 
 
 def _load_xontrib_(xsh: XonshSession, **_):
     # Some code in Using Python API:
-    var = xsh.env.get("VAR", "default")
-    result = xsh.subproc_captured_stdout(["echo", "1"])
-    print(result, var)
+
+    xsh.shells.append(
+        ShellDefinition(
+            aliases=("ptk", "prompt_toolkit", "prompt-toolkit"),
+            cls="xontrib_ptk_shell.shell:PromptToolkitShell",
+        )
+    )
