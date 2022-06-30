@@ -1,0 +1,19 @@
+# Changes here will be overwritten by Copier
+_commit: v0.0.1-10-g8a88fef
+_src_path: .
+email: jnoortheen@gmail.com
+enable_autoloading: true
+enable_pre_commit_hooks: true
+full_name: Noortheen Raja
+github_username: xonsh
+has_aliases: false
+has_events: false
+package_manager: setuptools
+project_name: ptk-shell
+project_package_name: ptk_shell
+project_repo_name: xontrib-ptk-shell
+project_short_description: feature rich prompt-toolkit based shell backend for Xonsh
+pure_py: 'yes'
+py_module_name: xontrib_ptk_shell
+version: 0.0.1
+
