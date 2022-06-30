@@ -1,5 +1,5 @@
 <p align="center">
-feature rich prompt-toolkit based shell backend for Xonsh
+A feature rich [`prompt-toolkit`](https://github.com/prompt-toolkit/python-prompt-toolkit) based shell backend for Xonsh
 </p>
 
 <p align="center">
