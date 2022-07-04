@@ -1,6 +1,7 @@
+import typing as tp
 import warnings
 
-from xonsh.environ import Var
+from xonsh.environ import Var, VarKeyType
 from xonsh.platform import os_environ
 from xonsh.tools import (
     always_false,
@@ -90,8 +91,60 @@ def ptk2_color_depth_setter(x):
     return x
 
 
+class Xettings:
+    @classmethod
+    def get_settings(cls) -> tp.Iterator[tp.Tuple[VarKeyType, Var]]:
+        for var_name, var in vars(cls).items():
+            if not var_name.startswith("__") and var_name.isupper():
+                yield var.get_key(var_name), var
+
+    @staticmethod
+    def _get_groups(
+        cls, _seen: tp.Optional[tp.Set["Xettings"]] = None, *bases: "Xettings"
+    ):
+        if _seen is None:
+            _seen = set()
+        subs = cls.__subclasses__()
+
+        for sub in subs:
+            if sub not in _seen:
+                _seen.add(sub)
+                yield (*bases, sub), tuple(sub.get_settings())
+                yield from Xettings._get_groups(sub, _seen, *bases, sub)
+
+    @classmethod
+    def get_groups(
+        cls,
+    ) -> tp.Iterator[
+        tp.Tuple[tp.Tuple["Xettings", ...], tp.Tuple[tp.Tuple[VarKeyType, Var], ...]]
+    ]:
+        yield from Xettings._get_groups(cls)
+
+    @classmethod
+    def get_doc(cls):
+        import inspect
+
+        return inspect.getdoc(cls)
+
+    @classmethod
+    def get_group_title(cls) -> str:
+        doc = cls.get_doc()
+        if doc:
+            return doc.splitlines()[0]
+        return cls.__name__
+
+    @classmethod
+    def get_group_description(cls) -> str:
+        doc = cls.get_doc()
+        if doc:
+            lines = doc.splitlines()
+            if len(lines) > 1:
+                return "\n".join(lines[1:])
+        return ""
+
+
 # topic prompt settings
-class PTKSetting:  # sub-classing -> sub-group
+class PTKSetting(Xettings):  # sub-classing -> sub-group
     """Prompt Toolkit shell
     Only usable with ``$SHELL_TYPE=prompt_toolkit.``
     """
@@ -181,7 +234,7 @@ class AsyncPromptSetting(PTKSetting):
 
 
 # completer settings
-class PTKCompletionSetting:
+class PTKCompletionSetting(Xettings):
     """Prompt Toolkit tab-completion"""
 
     COMPLETIONS_CONFIRM = Var.with_default(

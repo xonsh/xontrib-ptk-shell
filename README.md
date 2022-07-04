@@ -36,6 +36,7 @@ $XONTRIBS_AUTOLOAD_DISABLED = {"ptk_shell", }
 - Whole word jumping shortcuts - link doc here
 - On Windows `free_cwd` - link here
 - [`Fish`](https://fishshell.com/docs/current/cmds/abbr.html) like abbreviations - link here
+- Asynchronous prompts
 
 ## Releasing your package
 

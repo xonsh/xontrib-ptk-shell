@@ -25,3 +25,9 @@ def _load_xontrib_(xsh: XonshSession, **_):
     )
 
     register_events(xsh.builtins.events)
+
+    from . import environ
+
+    for _, vars in environ.Xettings.get_groups():  # type: ignore
+        for key, var in vars:
+            xsh.env[key] = var
