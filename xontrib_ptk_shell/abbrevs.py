@@ -45,6 +45,7 @@ if tp.TYPE_CHECKING:
 
     AbbrValType = tp.Union[str, AbbrCallType]
 
+# a singleton used as the register
 abbrevs: "dict[str, AbbrValType]" = dict()
 
 

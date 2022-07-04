@@ -53,16 +53,6 @@ except ImportError:
 CAPITAL_PATTERN = re.compile(r"([a-z])([A-Z])")
 Token = _TokenType()
 
-events.transmogrify("on_ptk_create", "LoadEvent")
-events.doc(
-    "on_ptk_create",
-    """
-on_ptk_create(prompter: PromptSession, history: PromptToolkitHistory, completer: PromptToolkitCompleter, bindings: KeyBindings) ->
-
-Fired after prompt toolkit has been initialized
-""",
-)
-
 
 def tokenize_ansi(tokens):
     """Checks a list of (token, str) tuples for ANSI escape sequences and
@@ -212,6 +202,14 @@ class PromptToolkitShell(BaseShell):
             completer=self.pt_completer,
             bindings=self.key_bindings,
         )
+        if XSH.env["XONSH_WHOLE_WORD_SHORTCUTS"]:
+            from .whole_word_jumping import custom_keybindings
+
+            custom_keybindings(self.key_bindings)
+        if XSH.env["XONSH_FREE_CWD"]:
+            from .free_cwd import setup_release_cwd_hook
+
+            setup_release_cwd_hook(self.prompter, self.completer)
         # Goes at the end, since _MergedKeyBindings objects do not have
         # an add() function, which is necessary for on_ptk_create events
         self.key_bindings = merge_key_bindings(
