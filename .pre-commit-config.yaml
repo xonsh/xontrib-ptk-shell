@@ -9,7 +9,7 @@ repos:
           "--skip=migrations"
         ]
 
-  - repo: https://github.com/ambv/black
+  - repo: https://github.com/psf/black
     rev: 22.6.0
     hooks:
       - id: black
