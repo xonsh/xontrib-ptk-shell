@@ -15,7 +15,7 @@ def register_events(events):
 
 def _load_xontrib_(xsh: XonshSession, **_):
     # Some code in Using Python API:
-
+    ctx = {}
     xsh.shells.append(
         ShellDefinition(
             aliases=("ptk", "prompt_toolkit", "prompt-toolkit"),
@@ -26,8 +26,12 @@ def _load_xontrib_(xsh: XonshSession, **_):
 
     register_events(xsh.builtins.events)
 
-    from . import environ
+    from . import abbrevs, environ
 
     for _, vars in environ.Xettings.get_groups():  # type: ignore
         for key, var in vars:
             xsh.env[key] = var
+
+    # abbrevs
+    ctx.update(abbrevs.register(xsh))
+    return ctx

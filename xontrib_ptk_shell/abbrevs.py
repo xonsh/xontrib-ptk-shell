@@ -117,7 +117,8 @@ def set_cursor_position(buffer, expanded: str) -> None:
 def custom_keybindings(bindings, **kw):
 
     from prompt_toolkit.filters import EmacsInsertMode, ViInsertMode
-    from xonsh.ptk_shell.key_bindings import carriage_return
+
+    from xontrib_ptk_shell.key_bindings import carriage_return
 
     handler = bindings.add
     insert_mode = ViInsertMode() | EmacsInsertMode()
@@ -149,7 +150,7 @@ def custom_keybindings(bindings, **kw):
         carriage_return(buffer, event.cli)
 
 
-def _load_xontrib_(xsh: XonshSession, **_):
+def register(xsh: XonshSession):
     xsh.builtins.events.on_ptk_create(custom_keybindings)
     # XSH.builtins is a namespace and extendable
     xsh.builtins.abbrevs = abbrevs

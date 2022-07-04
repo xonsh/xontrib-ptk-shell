@@ -12,7 +12,7 @@ classifiers = [
     "Topic :: Terminals",
 ]
 requires-python = ">=3.8"
-dependencies = ["xonsh>=0.12.5"]
+dependencies = ["xonsh>=0.12.6"]
 authors = [
     { name = "Noortheen Raja", email = "jnoortheen@gmail.com" },
 ]
@@ -31,7 +31,10 @@ Code = "https://github.com/xonsh/xontrib-ptk-shell"
 "Issue tracker" = "https://github.com/xonsh/xontrib-ptk-shell/issues"
 
 [project.optional-dependencies]
-dev = ["pytest>=7.0"]
+dev = [
+    "pytest>=7.0",
+    "pyte>=0.8.1",
+]
 
 [build-system]
 requires = [
@@ -70,3 +73,6 @@ force-exclude = '''
   | disk-cache.sqlite3
 )/
 '''
+
+[tool.pdm]
+[tool.pdm.dev-dependencies]

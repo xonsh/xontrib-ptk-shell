@@ -4,7 +4,8 @@ import functools
 import typing as tp
 
 from xonsh.prompt.base import DEFAULT_PROMPT, PromptFormatter
-from xonsh.ptk_shell.updator import AsyncPrompt, PromptUpdator
+
+from xontrib_ptk_shell.updator import AsyncPrompt, PromptUpdator
 
 
 class PTKPromptFormatter(PromptFormatter):

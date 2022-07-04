@@ -157,7 +157,7 @@ class PromptUpdator:
     """Handle updating multiple AsyncPrompt instances prompt/rprompt/bottom_toolbar"""
 
     def __init__(self, shell):
-        from xonsh.ptk_shell.shell import PromptToolkitShell
+        from xontrib_ptk_shell.shell import PromptToolkitShell
 
         self.prompts: tp.Dict[str, AsyncPrompt] = {}
         self.shell: PromptToolkitShell = shell

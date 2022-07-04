@@ -4,7 +4,7 @@ import pytest
 @pytest.fixture
 def history_obj():
     """Instantiate `PromptToolkitHistory` and append a line string"""
-    from xonsh.ptk_shell.history import PromptToolkitHistory
+    from xontrib_ptk_shell.history import PromptToolkitHistory
 
     hist = PromptToolkitHistory(load_prev=False)
     hist.append_string("line10")
