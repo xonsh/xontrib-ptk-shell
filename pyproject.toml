@@ -1,4 +1,3 @@
-
 [project]
 name = "xontrib-ptk-shell"
 version = "0.0.1"
@@ -17,31 +16,22 @@ dependencies = ["xonsh>=0.12.5"]
 authors = [
     { name = "Noortheen Raja", email = "jnoortheen@gmail.com" },
 ]
+
 [project.readme]
 file = "README.md"
 content-type = "text/markdown"
 
-
-
 [project.entry-points."xonsh.xontribs"]
 "ptk_shell" = "xontrib_ptk_shell.main"
 
-
-
 [project.urls]
-
 Homepage = "https://github.com/xonsh/xontrib-ptk-shell"
 Documentation = "https://github.com/xonsh/xontrib-ptk-shell/blob/master/README.md"
 Code = "https://github.com/xonsh/xontrib-ptk-shell"
 "Issue tracker" = "https://github.com/xonsh/xontrib-ptk-shell/issues"
 
-
-
-
 [project.optional-dependencies]
 dev = ["pytest>=7.0"]
-
-
 
 [build-system]
 requires = [
@@ -49,14 +39,15 @@ requires = [
     "wheel",               # for bdist package distribution
 ]
 build-backend = "setuptools.build_meta"
+
 [tool.setuptools]
 packages = ["xontrib"]
 package-dir = {xontrib = "xontrib"}
 platforms = ["any"]
 include-package-data = false
+
 [tool.setuptools.package-data]
 xontrib = ["*.xsh"]
-
 
 [tool.isort]
 profile = "black"

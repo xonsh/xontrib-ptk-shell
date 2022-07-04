@@ -14,12 +14,28 @@ xpip install xontrib-ptk-shell
 
 This xontrib will get loaded automatically for interactive sessions.
 
+If installed, the `ptk-shell` will get used by default. This can also be specified explcitly by
+
+```xonsh
+$SHELL_TYPE = "ptk"
+
+# or pass as argument
+xonsh --shell-type=ptk
+```
+
 To stop this, set
 
 ```xonsh
 $XONTRIBS_AUTOLOAD_DISABLED = {"ptk_shell", }
 ```
 
+## Features
+
+- [`Fish`](https://fishshell.com/) like [auto-suggesions](https://python-prompt-toolkit.readthedocs.io/en/master/pages/asking_for_input.html#auto-suggestion) from history
+- emacs and vi mode available
+- Whole word jumping shortcuts - link doc here
+- On Windows `free_cwd` - link here
+- [`Fish`](https://fishshell.com/docs/current/cmds/abbr.html) like abbreviations - link here
 
 ## Releasing your package
 
