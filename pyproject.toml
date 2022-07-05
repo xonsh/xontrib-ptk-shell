@@ -36,6 +36,7 @@ Code = "https://github.com/xonsh/xontrib-ptk-shell"
 dev = [
     "pytest>=7.0",
     "pyte>=0.8.1",
+    "pytest-cov>=3.0.0",
 ]
 
 [build-system]
