@@ -2,11 +2,8 @@ import typing as tp
 import warnings
 
 from xonsh.environ import Env, Var, VarKeyType
-from xonsh.platform import os_environ
 from xonsh.tools import (
-    always_false,
     dict_to_str,
-    ensure_string,
     is_int,
     is_str_str_dict,
     to_int_or_none,
@@ -60,35 +57,6 @@ def to_completion_mode(x):
         )
         y = "default"
     return y
-
-
-def ptk2_color_depth_setter(x):
-    """Setter function for $PROMPT_TOOLKIT_COLOR_DEPTH. Also
-    updates os.environ so prompt toolkit can pickup the value.
-    """
-    x = str(x)
-    if x in {
-        "DEPTH_1_BIT",
-        "MONOCHROME",
-        "DEPTH_4_BIT",
-        "ANSI_COLORS_ONLY",
-        "DEPTH_8_BIT",
-        "DEFAULT",
-        "DEPTH_24_BIT",
-        "TRUE_COLOR",
-    }:
-        pass
-    elif x in {"", None}:
-        x = ""
-    else:
-        msg = f'"{x}" is not a valid value for $PROMPT_TOOLKIT_COLOR_DEPTH. '
-        warnings.warn(msg, RuntimeWarning)
-        x = ""
-    if x == "" and "PROMPT_TOOLKIT_COLOR_DEPTH" in os_environ:
-        del os_environ["PROMPT_TOOLKIT_COLOR_DEPTH"]
-    else:
-        os_environ["PROMPT_TOOLKIT_COLOR_DEPTH"] = x
-    return x
 
 
 class Xettings:
@@ -167,15 +135,6 @@ class PTKSetting(Xettings):  # sub-classing -> sub-group
         "some terminals however, this disables the ability to scroll back "
         "through the history of the terminal. Only usable with "
         "``$SHELL_TYPE=prompt_toolkit``",
-    )
-    PROMPT_TOOLKIT_COLOR_DEPTH = Var(
-        always_false,
-        ptk2_color_depth_setter,
-        ensure_string,
-        "",
-        "The color depth used by prompt toolkit 2. Possible values are: "
-        "``DEPTH_1_BIT``, ``DEPTH_4_BIT``, ``DEPTH_8_BIT``, ``DEPTH_24_BIT`` "
-        "colors. Default is an empty string which means that prompt toolkit decide.",
     )
     PTK_STYLE_OVERRIDES = Var(
         is_str_str_dict,
