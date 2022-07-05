@@ -1,11 +1,7 @@
 """test xontrib.abbrevs"""
 
-import importlib
-import sys
-
 from prompt_toolkit.buffer import Buffer
 from pytest import fixture, mark
-from xonsh.xontribs import find_xontrib
 
 
 @fixture
@@ -16,14 +12,6 @@ def _buffer():
         return buf
 
     return _wrapper
-
-
-@fixture
-def abbrevs_xontrib(monkeypatch, source_path):
-    monkeypatch.syspath_prepend(source_path)
-    spec = find_xontrib("abbrevs")
-    yield importlib.import_module(spec.name)
-    del sys.modules[spec.name]
 
 
 ps_special_expand = (
@@ -41,8 +29,8 @@ ps_special_expand = (
         ("pt", "poe<edit>try", "poetry", 3),
     ],
 )
-def test_gets_expanded(abbr, val, expanded, cur, abbrevs_xontrib, _buffer):
-    from xontrib import abbrevs
+def test_gets_expanded(abbr, val, expanded, cur, _buffer):
+    from xontrib_ptk_shell import abbrevs
 
     abbrevs.abbrevs[abbr] = val
 

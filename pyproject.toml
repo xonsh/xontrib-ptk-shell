@@ -12,7 +12,9 @@ classifiers = [
     "Topic :: Terminals",
 ]
 requires-python = ">=3.8"
-dependencies = ["xonsh>=0.12.6"]
+dependencies = [
+    "xonsh @ git+https://github.com/jnoortheen/xonsh@rm-ptk-out",
+]
 authors = [
     { name = "Noortheen Raja", email = "jnoortheen@gmail.com" },
 ]
