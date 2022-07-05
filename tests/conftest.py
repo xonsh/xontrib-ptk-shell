@@ -2,7 +2,16 @@ import pytest
 
 
 @pytest.fixture
-def ptk_shell(xonsh_execer):
+def ptk_xontrib(load_xontrib, xession):
+    from xonsh.xontribs import xontribs_load, xontribs_unload
+
+    mod = "xontrib_ptk_shell.main"
+    yield xontribs_load([mod], full_module=True)
+    xontribs_unload([mod], full_module=True)
+
+
+@pytest.fixture
+def ptk_shell(xonsh_execer, ptk_xontrib):
     from prompt_toolkit.input import create_pipe_input
     from prompt_toolkit.output import DummyOutput
 

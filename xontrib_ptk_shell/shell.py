@@ -202,11 +202,11 @@ class PromptToolkitShell(BaseShell):
             completer=self.pt_completer,
             bindings=self.key_bindings,
         )
-        if XSH.env["XONSH_WHOLE_WORD_SHORTCUTS"]:
+        if XSH.env.get("XONSH_WHOLE_WORD_SHORTCUTS", False):
             from .whole_word_jumping import custom_keybindings
 
             custom_keybindings(self.key_bindings)
-        if XSH.env["XONSH_FREE_CWD"]:
+        if XSH.env.get("XONSH_FREE_CWD", False):
             from .free_cwd import setup_release_cwd_hook
 
             setup_release_cwd_hook(self.prompter, self.completer)

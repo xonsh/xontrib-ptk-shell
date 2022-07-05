@@ -35,3 +35,13 @@ def _load_xontrib_(xsh: XonshSession, **_):
     # abbrevs
     ctx.update(abbrevs.register(xsh))
     return ctx
+
+
+def _unload_xontrib_(xsh: XonshSession, **_):
+    ptk_idx = None
+    for idx, shl in enumerate(xsh.shells):
+        if "ptk" in shl.aliases:
+            ptk_idx = idx
+
+    if ptk_idx is not None:
+        xsh.shells.pop(ptk_idx)

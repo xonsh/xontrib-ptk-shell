@@ -12,45 +12,15 @@ from xontrib_ptk_shell.shell import tokenize_ansi
 
 
 @pytest.mark.parametrize(
-    "ptk_ver, ini_shell_type, exp_shell_type, warn_snip",
+    "ini_shell_type, exp_shell_type",
     [
-        (None, "prompt_toolkit", "readline", None),
-        ((0, 5, 7), "prompt_toolkit", "readline", "is not supported"),
-        ((1, 0, 0), "prompt_toolkit", "readline", "is not supported"),
-        ((2, 0, 0), "prompt_toolkit", "prompt_toolkit", None),
-        ((2, 0, 0), "best", "prompt_toolkit", None),
-        ((2, 0, 0), "readline", "readline", None),
-        ((3, 0, 0), "prompt_toolkit", "prompt_toolkit", None),
-        ((3, 0, 0), "best", "prompt_toolkit", None),
-        ((3, 0, 0), "readline", "readline", None),
-        ((4, 0, 0), "prompt_toolkit", "prompt_toolkit", None),
+        ("readline", "readline"),
+        ("prompt_toolkit", "prompt_toolkit"),
+        ("ptk", "ptk"),
+        ("best", "ptk"),
     ],
 )
-def test_prompt_toolkit_version_checks(
-    ptk_ver,
-    ini_shell_type,
-    exp_shell_type,
-    warn_snip,
-    monkeypatch,
-    xession,
-):
-
-    mocked_warn = ""
-
-    def mock_warning(msg):
-        nonlocal mocked_warn
-        mocked_warn = msg
-        return
-
-    def mock_has_prompt_toolkit():
-        nonlocal ptk_ver
-        return ptk_ver is not None
-
-    monkeypatch.setattr(
-        "xonsh.shell.warnings.warn", mock_warning
-    )  # hardwon: patch the caller!
-    monkeypatch.setattr("xonsh.platform.has_prompt_toolkit", mock_has_prompt_toolkit)
-
+def test_it_chooses_shell_given(ini_shell_type, exp_shell_type, ptk_xontrib):
     old_syspath = sys.path.copy()
 
     act_shell_type = Shell.choose_shell_type(ini_shell_type, {})
@@ -60,11 +30,6 @@ def test_prompt_toolkit_version_checks(
     sys.path = old_syspath
 
     assert act_shell_type == exp_shell_type
-
-    if warn_snip:
-        assert warn_snip in mocked_warn
-
-    pass
 
 
 @pytest.mark.parametrize(

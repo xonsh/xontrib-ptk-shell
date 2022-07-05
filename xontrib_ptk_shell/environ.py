@@ -205,6 +205,16 @@ class PTKSetting(Xettings):  # sub-classing -> sub-group
         r"``\x08`` on CTRL-Backspace (which is configurable on most terminal emulators). "
         r"On windows, the keys are reversed.",
     )
+    XONSH_WHOLE_WORD_SHORTCUTS = Var.with_default(
+        False,
+        doc="Enable/Disable shortcuts to jump/delete across whole (non-whitespace) words with Ctrl+Left/Right/Delete/Backspace.",
+        doc_default="False",
+    )
+    XONSH_FREE_CWD = Var.with_default(
+        False,
+        doc="Windows only, to release the lock on the current directory whenever the prompt is shown.",
+        doc_default="False",
+    )
 
 
 class AsyncPromptSetting(PTKSetting):
