@@ -75,6 +75,4 @@ This package was created with [xontrib cookiecutter template](https://github.com
 
 ## Todos
 
-- pre-commit CI
-- coverage CI
 - automatic release
