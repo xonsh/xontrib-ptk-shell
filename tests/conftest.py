@@ -12,21 +12,19 @@ def xsh(xonsh_session, env, monkeypatch):
 
 @pytest.fixture
 def load_xontrib_module():
-    loaded = []
-    from xonsh.xontribs import xontribs_load, xontribs_unload
+    with contextlib.ExitStack() as stack:
+        from xonsh.xontribs import xontribs_load, xontribs_unload
 
-    def _load(*names):
-        _, stderr, res = xontribs_load(names, full_module=True)
-        if stderr or res:
-            raise Exception(f"Failed to load xontrib: {stderr} - {res}")
+        def _load(*names):
+            _, stderr, res = xontribs_load(names, full_module=True)
+            if stderr or res:
+                raise Exception(f"Failed to load xontrib: {stderr} - {res}")
 
-        loaded.extend(names)
-        yield loaded
+            # cleanup
+            stack.callback(xontribs_unload, names, full_module=True)
+            return names
 
-    if loaded:
-        xontribs_unload(loaded, full_module=True)
-
-    return _load
+        yield _load
 
 
 @pytest.fixture
@@ -55,5 +53,5 @@ def create_shell():
 
 
 @pytest.fixture
-def ptk_shell(ptk_xontrib, xsh):
+def ptk_shell(ptk_xontrib, xsh, create_shell):
     return create_shell(xsh)
