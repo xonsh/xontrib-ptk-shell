@@ -1,3 +1,5 @@
+import contextlib
+
 import pytest
 
 
@@ -9,27 +11,49 @@ def xsh(xonsh_session, env, monkeypatch):
 
 
 @pytest.fixture
-def ptk_xontrib(xsh):
+def load_xontrib_module():
+    loaded = []
     from xonsh.xontribs import xontribs_load, xontribs_unload
 
-    mod = "xontrib_ptk_shell.main"
-    _, stderr, res = xontribs_load([mod], full_module=True)
-    if stderr or res:
-        raise Exception(f"Failed to load xontrib: {stderr} - {res}")
-    yield
-    xontribs_unload([mod], full_module=True)
+    def _load(*names):
+        _, stderr, res = xontribs_load(names, full_module=True)
+        if stderr or res:
+            raise Exception(f"Failed to load xontrib: {stderr} - {res}")
+
+        loaded.extend(names)
+        yield loaded
+
+    if loaded:
+        xontribs_unload(loaded, full_module=True)
+
+    return _load
+
+
+@pytest.fixture
+def ptk_xontrib(xsh, load_xontrib_module):
+    yield load_xontrib_module("xontrib_ptk_shell.main")
+
+
+@pytest.fixture
+def create_shell():
+    with contextlib.ExitStack() as stack:
+
+        def create(xsh):
+            from prompt_toolkit.input import create_pipe_input
+            from prompt_toolkit.output import DummyOutput
+
+            from xontrib_ptk_shell.shell import PromptToolkitShell
+
+            out = DummyOutput()
+            inp = stack.enter_context(create_pipe_input())
+            shell = PromptToolkitShell(
+                execer=xsh.execer, ctx=xsh.ctx, ptk_args={"input": inp, "output": out}
+            )
+            return inp, out, shell
+
+        yield create
 
 
 @pytest.fixture
 def ptk_shell(ptk_xontrib, xsh):
-    from prompt_toolkit.input import create_pipe_input
-    from prompt_toolkit.output import DummyOutput
-
-    from xontrib_ptk_shell.shell import PromptToolkitShell
-
-    out = DummyOutput()
-    with create_pipe_input() as inp:
-        shell = PromptToolkitShell(
-            execer=xsh.execer, ctx={}, ptk_args={"input": inp, "output": out}
-        )
-        yield inp, out, shell
+    return create_shell(xsh)
