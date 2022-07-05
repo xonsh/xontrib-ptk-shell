@@ -6,7 +6,8 @@ name: release & publish workflow
 on:
   # Triggers the workflow on push or pull request events but only for the default branch
   push:
-    branch: main
+    branches:
+      - main
     tags:
       - 'v*'
 
