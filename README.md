@@ -1,6 +1,12 @@
 
 A feature rich [`prompt-toolkit`](https://github.com/prompt-toolkit/python-prompt-toolkit) based shell backend for Xonsh
 
+<p align="center">
+    <a href="https://codecov.io/github/xonsh/xontrib-ptk-shell?branch=main">
+        <img src="https://codecov.io/gh/xonsh/xontrib-ptk-shell/branch/main/graphs/badge.svg" alt="codecov.io"/></a>
+    <a href="https://github.com/xonsh/xontrib-ptk-shell/actions">
+        <img src="https://github.com/xonsh/xontrib-ptk-shell/actions/workflows/test.yml/badge.svg?branch=main" alt="build status"></a>
+</p>
 
 ## Installation
 
