@@ -222,7 +222,7 @@ def load_xonsh_bindings(ptk_bindings: KeyBindingsBase) -> KeyBindingsBase:
     has_selection = HasSelection()
     insert_mode = ViInsertMode() | EmacsInsertMode()
 
-    if XSH.env["XONSH_CTRL_BKSP_DELETION"]:
+    if XSH.env.get("XONSH_CTRL_BKSP_DELETION", False):
         # Not all terminal emulators emit the same keys for backspace, therefore
         # ptk always maps backspace ("\x7f") to ^H ("\x08"), and all the backspace bindings are registered for ^H.
         # This means we can't re-map backspace and instead we register a new "real-ctrl-bksp" key.

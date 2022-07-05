@@ -28,11 +28,7 @@ def _load_xontrib_(xsh: XonshSession, **_):
 
     from . import abbrevs, environ
 
-    for _, vars in environ.Xettings.get_groups():  # type: ignore
-        for key, var in vars:
-            xsh.env[key] = var
-
-    # abbrevs
+    environ.register(xsh.env)
     ctx.update(abbrevs.register(xsh))
     return ctx
 

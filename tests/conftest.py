@@ -2,16 +2,19 @@ import pytest
 
 
 @pytest.fixture
-def ptk_xontrib(load_xontrib, xession):
+def ptk_xontrib(xession):
     from xonsh.xontribs import xontribs_load, xontribs_unload
 
     mod = "xontrib_ptk_shell.main"
-    yield xontribs_load([mod], full_module=True)
+    _, stderr, res = xontribs_load([mod], full_module=True)
+    if stderr or res:
+        raise Exception(f"Failed to load xontrib: {stderr} - {res}")
+    yield
     xontribs_unload([mod], full_module=True)
 
 
 @pytest.fixture
-def ptk_shell(xonsh_execer, ptk_xontrib):
+def ptk_shell(ptk_xontrib, xession):
     from prompt_toolkit.input import create_pipe_input
     from prompt_toolkit.output import DummyOutput
 
@@ -20,6 +23,6 @@ def ptk_shell(xonsh_execer, ptk_xontrib):
     out = DummyOutput()
     with create_pipe_input() as inp:
         shell = PromptToolkitShell(
-            execer=xonsh_execer, ctx={}, ptk_args={"input": inp, "output": out}
+            execer=xession.execer, ctx={}, ptk_args={"input": inp, "output": out}
         )
         yield inp, out, shell

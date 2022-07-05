@@ -1,7 +1,7 @@
 import typing as tp
 import warnings
 
-from xonsh.environ import Var, VarKeyType
+from xonsh.environ import Env, Var, VarKeyType
 from xonsh.platform import os_environ
 from xonsh.tools import (
     always_false,
@@ -306,3 +306,19 @@ class PTKCompletionSetting(Xettings):
         "pressed. This avoids the need to press TAB, except to cycle through "
         "the possibilities. This currently only affects the prompt-toolkit shell.",
     )
+
+
+def register(env: Env):
+    for _, vars in Xettings.get_groups():  # type: ignore
+        for key, var in vars:  # type: str, Var
+            env.register(
+                key,
+                default=var.default,
+                doc=var.doc,
+                validate=var.validate,
+                convert=var.convert,
+                detype=var.detype,
+                is_configurable=var.is_configurable,
+                doc_default=var.doc_default,
+                can_store_as_str=var.can_store_as_str,
+            )
