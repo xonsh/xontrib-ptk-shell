@@ -44,7 +44,7 @@ dev = [
 requires = [
     "setuptools>=62",
     "wheel",               # for bdist package distribution
-    "versioningit",
+    "versioningit>=2",
 ]
 build-backend = "setuptools.build_meta"
 
