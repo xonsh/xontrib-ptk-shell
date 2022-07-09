@@ -44,11 +44,11 @@ $XONTRIBS_AUTOLOAD_DISABLED = {"ptk_shell", }
 - [`Fish`](https://fishshell.com/docs/current/cmds/abbr.html) like abbreviations - link here
 - Asynchronous prompts
 
-## Releasing your package
+## Releasing package
 
-- Bump the version of your package.
 - Create a GitHub release (The release notes are automatically generated as a draft release after each push).
-- And publish with `poetry publish --build` or `twine`
+- The package will be published to PyPI automatically by GitHub Actions.
+
 
 ## Credits
 

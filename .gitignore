@@ -133,3 +133,5 @@ dmypy.json
 
 # pdm
 pdm.lock
+
+.DS_Store
