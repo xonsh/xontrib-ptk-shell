@@ -76,3 +76,4 @@ This package was created with [xontrib cookiecutter template](https://github.com
 ## Todos
 
 - automatic release
+- docs
