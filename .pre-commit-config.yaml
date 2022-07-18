@@ -48,7 +48,7 @@ repos:
         args:
           - "--py37-plus"
   - repo: https://github.com/compilerla/conventional-pre-commit
-    rev: v1.3.0
+    rev: v1.4.0
     hooks:
       - id: conventional-pre-commit
         stages: [commit-msg]
