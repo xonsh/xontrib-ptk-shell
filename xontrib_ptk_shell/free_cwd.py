@@ -8,6 +8,7 @@ works with the prompt_toolkit backend and can cause issues
 if any extensions are enabled that hook the prompt and relies on
 ``os.getcwd()``.
 """
+
 import functools
 import os
 from pathlib import Path
