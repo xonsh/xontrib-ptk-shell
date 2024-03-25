@@ -14,8 +14,8 @@ def _buffer():
     return _wrapper
 
 
-ps_special_expand = (
-    lambda buffer, word: "procs" if buffer.text.startswith(word) else word
+ps_special_expand = lambda buffer, word: (
+    "procs" if buffer.text.startswith(word) else word
 )
 
 
